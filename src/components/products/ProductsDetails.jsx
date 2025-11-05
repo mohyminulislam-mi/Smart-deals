@@ -86,8 +86,8 @@ const ProductsDetails = () => {
                     className="input"
                     placeholder="Enter your name"
                     name="name"
-                    readOnly
-                    defaultValue={user?.displayName}
+                    // readOnly
+                    // defaultValue={user?.displayName}
                   />
                 </div>
                 <div>
@@ -97,8 +97,8 @@ const ProductsDetails = () => {
                     className="input"
                     placeholder="Enter your Email"
                     name="email"
-                    readOnly
-                    defaultValue={user?.email}
+                    // readOnly
+                    // defaultValue={user?.email}
                   />
                 </div>
               </div>
@@ -159,8 +159,8 @@ const ProductsDetails = () => {
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
                             <img
-                              src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                              alt="Avatar Tailwind CSS Component"
+                              src={bid.buyer_image}
+                              alt="Image"
                             />
                           </div>
                         </div>
