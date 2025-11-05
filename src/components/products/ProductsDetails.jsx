@@ -25,9 +25,9 @@ const ProductsDetails = () => {
     const name = e.target.name.value;
     const email = e.target.email.value;
     const url = e.target.url.value;
-    const bid = e.target.bid.value;
-    const contact = e.target.contact.value;
-    console.log(productId, name, email, url, bid, contact);
+    const price = e.target.price.value;
+    const countries = e.target.countries.value;
+    console.log(productId, name, email, url, price, countries);
 
     const newBid = {
       product: productId,
@@ -35,8 +35,8 @@ const ProductsDetails = () => {
       buyer_email: email,
       buyer_image: user?.photoURL,
       buyer_url: url,
-      buyer_bid: bid,
-      buyer_contact: contact,
+      buyer_price: price,
+      buyer_countries: countries,
       status: "pending",
     };
 
@@ -59,6 +59,11 @@ const ProductsDetails = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          // add the new bid to the state
+          newBid._id = data.insertedId;
+          const newBids = [...bids, newBid];
+          newBids.sort((a, b) => b.buyer_price - a.buyer_price);
+          setBids(newBids);
         }
       });
   };
@@ -114,15 +119,15 @@ const ProductsDetails = () => {
               <input
                 type="text"
                 className="input w-full"
-                name="bid"
+                name="price"
                 placeholder="e.g. Artisan Roasters"
               />
-              <label className="label">Contact Info</label>
+              <label className="label">Your Countrie</label>
               <input
                 type="text"
                 className="input w-full"
-                placeholder="e.g. +1-555-1234"
-                name="contact"
+                placeholder="e.g. Bangladesh"
+                name="countries"
               />
               <div className="flex gap-1 justify-end mt-5">
                 <button formMethod="dialog" className="btn mr-2">
@@ -158,15 +163,14 @@ const ProductsDetails = () => {
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
-                            <img
-                              src={bid.buyer_image}
-                              alt="Image"
-                            />
+                            <img src={bid.buyer_image} alt="Image" />
                           </div>
                         </div>
                         <div>
                           <div className="font-bold">{bid.buyer_name}</div>
-                          <div className="text-sm opacity-50">Bangladesh</div>
+                          <div className="text-sm opacity-50">
+                            {bid.buyer_countries}
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -177,9 +181,9 @@ const ProductsDetails = () => {
                         Desktop Support Technician
                       </span>
                     </td>
-                    <td>Purple</td>
+                    <td>{bid.buyer_price}</td>
                     <th>
-                      <button className="btn btn-ghost btn-xs">details</button>
+                      <button className="btn btn-neutral">details</button>
                     </th>
                   </tr>
                 ))}
