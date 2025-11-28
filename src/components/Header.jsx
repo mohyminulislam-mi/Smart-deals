@@ -37,6 +37,9 @@ const Header = () => {
       {user && (
         <>
           <li>
+            <NavLink to={"/allproduct"}>All Product</NavLink>
+          </li>
+          <li>
             <NavLink to={"/My-Products"}>MyProducts</NavLink>
           </li>
           <li>
@@ -81,42 +84,33 @@ const Header = () => {
           <h1>Smart Deals</h1>
         </Link>
       </div>
-      <div className="navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{menus}</ul>
+      <div className="navbar-end">
         {user ? (
-          <>
-            <Link to={"/my-profile"} className="cursor-pointer">
-              <img
-                src={user?.photoURL}
-                alt="User image"
-                className="w-[50px] h-[50px] rounded-full"
-              />
-            </Link>
-            <button className="btn btn-neutral ml-2" onClick={handleSingOut}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to={"/login"} className="btn btn-neutral">
-              Login
-            </Link>
-            <Link to={"/register"} className="btn btn-neutral ml-2">
-              Register
-            </Link>
-          </>
-        )}
-      </div>
-      <div className="navbar-end lg:hidden">
-        {user ? (
-          <>
-            <Link to={"/my-profile"} className="cursor-pointer">
-              <img src={UserImg} alt="User image" />
-            </Link>
-            <button className="btn btn-neutral ml-2" onClick={handleSingOut}>
-              Logout
-            </button>
-          </>
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  alt="User Image"
+                  src={user?.photoURL || user?.reloadUserInfo.photoUrl}
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex="-1"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <a className="justify-between">Profile</a>
+              </li>
+              <button className="btn btn-neutral ml-2" onClick={handleSingOut}>
+                Logout
+              </button>
+            </ul>
+          </div>
         ) : (
           <>
             <Link to={"/login"} className="btn btn-neutral">
