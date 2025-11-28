@@ -5,17 +5,23 @@ import Swal from "sweetalert2";
 const MyBids = () => {
   const { user } = use(AuthContext);
   const [bids, setBids] = useState([]);
+  console.log(user?.accessToken);
+  
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/bids?email=${user.email}`)
+      fetch(`http://localhost:3000/bids?email=${user.email}`, {
+        headers: {
+          authorization: `Bearer ${user?.accessToken}`
+        }
+      })
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
           setBids(data);
         });
     }
-  }, [user?.email]);
+  }, [user?.email, user?.accessToken]);
   const handleDeleteBid = (_id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -70,7 +76,7 @@ const MyBids = () => {
           </thead>
           <tbody>
             {bids.map((bid, index) => (
-              <tr>
+              <tr key={index}>
                 <th>{index + 1}1</th>
                 <td>
                   <div className="flex items-center gap-3">
