@@ -9,6 +9,7 @@ import ForgetPassword from "../pages/Auth/ForgetPassword";
 import MyProducts from "../pages/products/MyProducts";
 import MyBids from "../pages/Bids/MyBids";
 import ProductsDetails from "../components/products/ProductsDetails";
+import PrivateRoutes from "../routes/PrivateRoutes"
 
 const router = createBrowserRouter([
   {
@@ -21,9 +22,9 @@ const router = createBrowserRouter([
         path: "/ProductsDetails/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:3000/products/${params.id}`),
-        Component: ProductsDetails,
+        element: <PrivateRoutes><ProductsDetails></ProductsDetails></PrivateRoutes>
       },
-      { path: "/My-Products", Component: MyProducts },
+      { path: "/My-Products", element: <PrivateRoutes><MyProducts></MyProducts></PrivateRoutes> },
       { path: "/My-Bids", Component: MyBids },
       { path: "/Create-Product", Component: CreateProduct },
       { path: "/login", Component: Login },

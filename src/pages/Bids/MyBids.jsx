@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 const MyBids = () => {
   const { user } = use(AuthContext);
+  
   const [bids, setBids] = useState([]);
   console.log(user?.accessToken);
   

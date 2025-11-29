@@ -7,6 +7,8 @@ import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
   const { user, singOutUser } = use(AuthContext);
+  console.log(user);
+  
   const navigate = useNavigate();
 
   const handleSingOut = () => {
@@ -104,8 +106,8 @@ const Header = () => {
                   className="btn btn-ghost btn-circle avatar"
                 >
                   <div className="w-10 rounded-full">
-                    <img
-                      alt={UserImg}
+                  <img
+                    referrerPolicy="no-referrer"
                       src={user?.photoURL || user?.reloadUserInfo.photoUrl}
                     />
                   </div>
