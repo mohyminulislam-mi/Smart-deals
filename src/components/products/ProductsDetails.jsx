@@ -9,6 +9,8 @@ const ProductsDetails = () => {
   const { _id: productId } = useLoaderData();
   const bidModalRef = useRef();
   const [bids, setBids] = useState([]);
+  console.log(bids);
+  
   useEffect(() => {
     fetch(`http://localhost:3000/products/bids/${productId}`)
       .then((res) => res.json())

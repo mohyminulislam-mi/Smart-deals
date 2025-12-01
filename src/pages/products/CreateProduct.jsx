@@ -3,13 +3,15 @@ import { Link } from "react-router";
 import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
+import useAxios from "../../hooks/useAxios";
 
 const CreateProduct = () => {
   const { user } = use(AuthContext);
+  const axiosInstance = useAxios();
 
   const handleCreateProduct = (e) => {
     e.preventDefault();
-    const formData = {
+    const newProducts = {
       title: e.target.title.value,
       category: e.target.category.value,
       price_min: e.target.minPrice.value,
@@ -27,25 +29,17 @@ const CreateProduct = () => {
       created_at: e.target.createdAt.value,
       status: "pending",
     };
-    fetch("http://localhost:3000/products", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.insertedId) {
-          Swal.fire({
-            title: "Product Added",
-            icon: "success",
-            draggable: true,
-          });
-        }
-      });
-    e.target.reset();
+    axiosInstance.post("/products", newProducts) .then((data) => {
+      if (data.data.insertedId) {
+        Swal.fire({
+          title: "Product Added",
+          icon: "success",
+          draggable: true,
+        });
+      }
+      console.log("data", data.data);
+      e.target.reset();
+    });
   };
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
