@@ -16,9 +16,9 @@ const Products = ({ product }) => {
         <div className="card-actions w-full">
           <Link
             to={`/ProductsDetails/${_id}`}
-            className="btn btn-primary w-full"
+            className="btn btn-outline btn-primary w-full"
           >
-            Buy Now
+            View Details
           </Link>
         </div>
       </div>
