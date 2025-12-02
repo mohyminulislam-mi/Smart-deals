@@ -9,7 +9,7 @@ import ForgetPassword from "../pages/Auth/ForgetPassword";
 import MyProducts from "../pages/products/MyProducts";
 import MyBids from "../pages/Bids/MyBids";
 import ProductsDetails from "../components/products/ProductsDetails";
-import PrivateRoutes from "../routes/PrivateRoutes"
+import PrivateRoutes from "../routes/PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -17,14 +17,32 @@ const router = createBrowserRouter([
     Component: MainLayouts,
     children: [
       { index: true, Component: Home },
-      { path: "/allproduct", Component: AllProducts },
+      {
+        path: "/allproduct",
+        element: (
+          <PrivateRoutes>
+            <AllProducts></AllProducts>
+          </PrivateRoutes>
+        ),
+      },
       {
         path: "/ProductsDetails/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:3000/products/${params.id}`),
-        element: <PrivateRoutes><ProductsDetails></ProductsDetails></PrivateRoutes>
+        element: (
+          <PrivateRoutes>
+            <ProductsDetails></ProductsDetails>
+          </PrivateRoutes>
+        ),
       },
-      { path: "/My-Products", element: <PrivateRoutes><MyProducts></MyProducts></PrivateRoutes> },
+      {
+        path: "/My-Products",
+        element: (
+          <PrivateRoutes>
+            <MyProducts></MyProducts>
+          </PrivateRoutes>
+        ),
+      },
       { path: "/My-Bids", Component: MyBids },
       { path: "/Create-Product", Component: CreateProduct },
       { path: "/login", Component: Login },
