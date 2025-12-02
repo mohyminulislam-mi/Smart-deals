@@ -3,11 +3,11 @@ import { Link } from "react-router";
 import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
-import useAxios from "../../hooks/useAxios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CreateProduct = () => {
   const { user } = use(AuthContext);
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const handleCreateProduct = (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ const CreateProduct = () => {
       created_at: e.target.createdAt.value,
       status: "pending",
     };
-    axiosInstance.post("/products", newProducts) .then((data) => {
+    axiosSecure.post("/products", newProducts).then((data) => {
       if (data.data.insertedId) {
         Swal.fire({
           title: "Product Added",

@@ -7,7 +7,6 @@ import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
   const { user, singOutUser } = use(AuthContext);
-  console.log(user);
   
   const navigate = useNavigate();
 

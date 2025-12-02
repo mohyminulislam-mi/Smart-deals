@@ -1,10 +1,26 @@
-import React, { use } from "react";
+import React, { useEffect, useState } from "react";
 import Products from "./products/Products";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
 
-const LatestProducts = ({ productsPromise }) => {
-  const products = use(productsPromise);
-  console.log(products);
+const LatestProducts = () => {
+  const {user, loading } = useAuth();
+  console.log(loading);
+  const [products, setProducts] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
+  useEffect(() => {
+    if (user && user.accessToken) {
+       axiosSecure.get("/latest-products").then((data) => {
+      console.log("data", data.data);
+      setProducts(data.data);
+    });
+    }
+  }, [user]);
+
+  if (loading) {
+    return <span>Loading..</span>;
+  }
   return (
     <div>
       <h1 className="text-center text-4xl text-purple-500 font-bold">
