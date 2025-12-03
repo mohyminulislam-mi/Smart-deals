@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Products from "./products/Products";
-import useAuth from "../hooks/useAuth";
-import Loading from "../Loading/Loading";
+import Products from "../products/Products";
+import useAuth from "../../hooks/useAuth";
+import Loading from "../../Loading/Loading";
 import { Link } from "react-router";
 import { FaArrowRightLong } from "react-icons/fa6";
-import useAxios from "../hooks/useAxios";
+import useAxios from "../../hooks/useAxios";
 
 const LatestProducts = () => {
   const { user, loading } = useAuth();
