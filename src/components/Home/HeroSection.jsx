@@ -12,7 +12,7 @@ const HeroSection = () => {
     "https://saasly.prebuiltui.com/assets/companies-logo/walmart.svg",
   ];
   return (
-    <section className="relative lg:min-h-screen md:min-h-[60vh] min-h-[40vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden bg-gradient-to-r from-sky-100 via-white to-[#E0F8F5]">
+    <section className="relative lg:min-h-screen md:min-h-[60vh] min-h-[40vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden bg-linear-to-r from-sky-100 via-white to-[#E0F8F5]">
       <img
         src={bghero1}
         alt="left curve"
@@ -35,7 +35,7 @@ const HeroSection = () => {
             <img
               src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200"
               alt="user3"
-              className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[1]"
+              className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-1"
             />
             <img
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200"
@@ -45,17 +45,17 @@ const HeroSection = () => {
             <img
               src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200"
               alt="user2"
-              className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[3]"
+              className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-3"
             />
             <img
               src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200"
               alt="user3"
-              className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[4]"
+              className="size-8 object-cover rounded-full border-2 border-white hover:-translate-y-0.5 transition z-4"
             />
             <img
               src="https://randomuser.me/api/portraits/men/75.jpg"
               alt="user5"
-              className="size-8 rounded-full border-2 border-white hover:-translate-y-0.5 transition z-[5]"
+              className="size-8 rounded-full border-2 border-white hover:-translate-y-0.5 transition z-5"
             />
           </div>
 
@@ -99,8 +99,8 @@ const HeroSection = () => {
 
         {/* CTA Buttons */}
         <div className="flex items-center gap-4 mt-7">
-          <a
-            href="/"
+          <Link
+            to='/allproduct'
             className="bg-purple-500 hover:bg-purple-600 text-white rounded-full px-9 h-12 m-1 ring-offset-2 ring-1 ring-purple-400 flex items-center transition-colors"
           >
             Get started
@@ -120,8 +120,8 @@ const HeroSection = () => {
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
             </svg>
-          </a>
-          <button className="flex items-center gap-2 border border-slate-400 hover:bg-purple-50 transition rounded-full px-7 h-12 text-slate-700">
+          </Link>
+          <button className="flex items-center gap-2 border cursor-pointer border-slate-400 hover:bg-purple-50 transition rounded-full px-7 h-12 text-slate-700">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
