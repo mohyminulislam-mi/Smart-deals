@@ -1,81 +1,86 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { FaEnvelope, FaMapMarkerAlt, FaUser } from "react-icons/fa";
 
 const ProductsDetails = () => {
   const { user } = use(AuthContext);
-  const { _id: productId } = useLoaderData();
+  const pData = useLoaderData();
   const bidModalRef = useRef();
   const [bids, setBids] = useState([]);
-  console.log(bids);
-  
+  const axiosSecure = useAxiosSecure();
+  console.log(pData);
+
+
   useEffect(() => {
-    fetch(`http://localhost:3000/products/bids/${productId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("bids for this products", data);
-        setBids(data);
-      });
-  }, [productId]);
+    axiosSecure.get(`/products/bids/${productId}`).then((res) => {
+      console.log("response data", res.data);
+      setBids(res.data);
+    });
+  }, [productId, axiosSecure]);
 
-  const handleBidModalBox = () => {
-    bidModalRef.current.showModal();
-  };
-  const handleSubmitModalData = (e) => {
-    e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const url = e.target.url.value;
-    const price = e.target.price.value;
-    const countries = e.target.countries.value;
-    console.log(productId, name, email, url, price, countries);
+  // const handleBidModalBox = () => {
+  //   bidModalRef.current.showModal();
+  // };
+  // const handleSubmitModalData = (e) => {
+  //   e.preventDefault();
+  //   const name = e.target.name.value;
+  //   const email = e.target.email.value;
+  //   const url = e.target.url.value;
+  //   const price = e.target.price.value;
+  //   const countries = e.target.countries.value;
+  //   console.log(productId, name, email, url, price, countries);
 
-    const newBid = {
-      product: productId,
-      buyer_name: name,
-      buyer_email: email,
-      buyer_image: user?.photoURL,
-      buyer_url: url,
-      buyer_price: price,
-      buyer_countries: countries,
-      status: "pending",
-    };
+  //   const newBid = {
+  //     product: productId,
+  //     buyer_name: name,
+  //     buyer_email: email,
+  //     buyer_image: user?.photoURL,
+  //     buyer_url: url,
+  //     buyer_price: price,
+  //     buyer_countries: countries,
+  //     status: "pending",
+  //   };
 
-    fetch("http://localhost:3000/bids", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newBid),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("buyer input data: ", data);
-        if (data.insertedId) {
-          bidModalRef.current.close();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your Bid Successful",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          // add the new bid to the state
-          newBid._id = data.insertedId;
-          const newBids = [...bids, newBid];
-          newBids.sort((a, b) => b.buyer_price - a.buyer_price);
-          setBids(newBids);
-        }
-      });
-  };
+  //   fetch("http://localhost:3000/bids", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(newBid),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("buyer input data: ", data);
+  //       if (data.insertedId) {
+  //         bidModalRef.current.close();
+  //         Swal.fire({
+  //           position: "top-end",
+  //           icon: "success",
+  //           title: "Your Bid Successful",
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //         // add the new bid to the state
+  //         newBid._id = data.insertedId;
+  //         const newBids = [...bids, newBid];
+  //         newBids.sort((a, b) => b.buyer_price - a.buyer_price);
+  //         setBids(newBids);
+  //       }
+  //     });
+  // };
   return (
     <div className="w-11/12 mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-3">
         {/* products descriptions */}
         <div className="col-span-1 mb-6">
-          <img className="h-80 rounded-lg" src="https://images.unsplash.com/photo-1510174210589-ed6667381173?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1073" alt="" />
+          <img
+            className="h-80 rounded-lg"
+            src="https://images.unsplash.com/photo-1510174210589-ed6667381173?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1073"
+            alt=""
+          />
           <h3 className="text-xl font-semibold mb-2">Product Description</h3>
           <p>
             <span className="font-semibold">Condition:</span> New
@@ -137,18 +142,23 @@ const ProductsDetails = () => {
             </div>
           </div>
           {/* modal popUp */}
-      <button  onClick={handleBidModalBox} className="btn btn-primary w-full text-lg">
-        I Want Buy This Product
-      </button>
+          <button
+            // onClick={handleBidModalBox}
+            className="btn btn-primary w-full text-lg"
+          >
+            I Want Buy This Product
+          </button>
         </div>
       </div>
-{/* modal popUp content */}
+      {/* modal popUp content */}
       <dialog ref={bidModalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg text-center">
             Give Seller Your Offered Price
           </h3>
-          <form onSubmit={handleSubmitModalData}>
+          <form
+          // onSubmit={handleSubmitModalData}
+          >
             <fieldset className="fieldset mt-5">
               <div className="flex gap-2">
                 <div>
